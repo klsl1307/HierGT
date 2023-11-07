@@ -1,8 +1,8 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-from model_0904 import Graphormer_0904
-# from model import Graphormer
+# from model_0904 import Graphormer_0904 # v1: replace SPD with coordinates
+from model_1101 import Graphormer_0904 # v2: combine SPD with coordinates
 from data import GraphDataModule, get_dataset
 
 from argparse import ArgumentParser
@@ -14,7 +14,8 @@ import os
 # os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
 ## TODO
-debug_directory = '/home/wzh/Graphormer-change/examples/ogb' # ogb-lsc: pretrain, ogb: finetune
+## please change use_angle & use_torsion
+debug_directory = '/home/wzh/Graphormer-change/examples/ogb-lsc' # ogb-lsc: pretrain, ogb: finetune
 # Change the current working directory to the debug directory
 os.chdir(debug_directory)
 
@@ -62,6 +63,8 @@ def cli_main():
             flag=args.flag,
             flag_m=args.flag_m,
             flag_step_size=args.flag_step_size,
+            use_angle=True,
+            use_torsion=True,
         )
     else:
         model = Graphormer_0904(
@@ -83,6 +86,8 @@ def cli_main():
             flag=args.flag,
             flag_m=args.flag_m,
             flag_step_size=args.flag_step_size,
+            use_angle=True,
+            use_torsion=True,
         )
     if not args.test and not args.validate:
         print(model)
